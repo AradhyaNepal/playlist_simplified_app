@@ -61,7 +61,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             itemBuilder: (context, index) {
               return NotificationListener<YoutubeNextNotification>(
                 onNotification: (_) {
-                  if (index < items.length - 1) {
+                  if (index < items.length) {
                     _moveTo(index+1);
                   } else {
                     _moveTo(0);
