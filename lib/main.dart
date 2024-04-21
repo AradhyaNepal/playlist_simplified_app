@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:playlist_simplified_app/common/constants/size_constants.dart';
 import 'package:playlist_simplified_app/common/route/generate_route.dart';
 import 'package:playlist_simplified_app/features/splash/splash_screen.dart';
 
@@ -12,14 +14,22 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'भजन किर्तन',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: ScreenUtilInit(
+        designSize: SizeConstants.size,
+        minTextAdapt: true,
+        splitScreenMode: true,
+        child: MaterialApp(
+          title: 'भजन किर्तन',
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: true,
+          ),
+          onGenerateRoute: GenerateRoute.onGenerateRoute,
+          initialRoute: SplashScreen.route,
+        ),
       ),
-      onGenerateRoute: GenerateRoute.onGenerateRoute,
-      initialRoute: SplashScreen.route,
     );
   }
 }
