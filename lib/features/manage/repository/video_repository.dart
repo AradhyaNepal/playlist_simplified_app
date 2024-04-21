@@ -28,17 +28,22 @@ class VideoRepository {
   List<String> get videoList{
     final item=_hiveBox.get(videosKey);
     if(item is List<String>){
-      final items = [
+      final items=[
         "CUT_hdgbV1I",
         "DLqzbColpcE",
         "yRyiswHx07I",
         "m2OpffdcjNM",
       ];
-      _hiveBox.put(videosKey,items);
+      videoList=items;
       return items;
     }else{
       return item;
     }
 
+  }
+
+  set videoList (List<String> items){
+    final toAdd=[...items];
+   _hiveBox.put(videosKey, toAdd);
   }
 }
