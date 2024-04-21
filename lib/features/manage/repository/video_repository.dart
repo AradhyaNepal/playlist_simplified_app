@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class VideoRepository {
@@ -27,7 +28,7 @@ class VideoRepository {
 
   List<String> get videoList{
     final item=_hiveBox.get(videosKey);
-    if(item is! List<String>){
+    if(item is! List<String> || kDebugMode){
       final items=[
         "GQ95alrpnC0",
         "3RqgDS8Lvak",
@@ -37,9 +38,8 @@ class VideoRepository {
         "oofKB5ayrDA",
         "0J1aNK16sFM",
         "RSPVq1ijicA",
-        "oofKB5ayrDA",
         "AETFvQonfV8",
-        "RSPVq1ijicA"
+        "Be-XDNW7yWM"
       ];
       videoList=items;
       return items;

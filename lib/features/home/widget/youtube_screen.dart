@@ -77,7 +77,7 @@ class _YoutubeContentState extends State<_YoutubeContent> {
           ],
         ),
         Positioned.fill(
-          bottom: 250.h,
+          bottom: 300.h,
           child: Container(
             color: Colors.black.withOpacity(0.2),
             height: double.infinity,

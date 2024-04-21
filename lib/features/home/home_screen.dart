@@ -77,6 +77,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         Positioned(
           top: MediaQuery.of(context).viewPadding.top + 50.r,
           right: 50.r,
+          left: 0,
           child: Row(
             children: [
               const Spacer(),
@@ -87,7 +88,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 ),
                 child: IconButton(
                   onPressed: () {
-                    _moveTo(1);
+                    _moveTo(0);
                   },
                   icon: Icon(
                     Icons.repeat,
