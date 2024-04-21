@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:playlist_simplified_app/common/constants/color_constants.dart';
+import 'package:playlist_simplified_app/common/widget/custom_dialog.dart';
 import 'package:playlist_simplified_app/common/widget/custom_network_image.dart';
 import 'package:playlist_simplified_app/features/manage/controller/currently_playing_controller.dart';
 import 'package:playlist_simplified_app/features/manage/controller/video_controller.dart';
@@ -40,15 +41,24 @@ class IndividualManageVideo extends ConsumerWidget {
             children: [
               const Spacer(),
               IconButton(
-                onPressed: (){},
+                onPressed: () {},
                 icon: const Icon(
                   Icons.edit,
                   color: Colors.blue,
                 ),
               ),
               IconButton(
-                onPressed: (){
-                  ref.read(videoProvider.notifier).remove(index);
+                onPressed: () async {
+                  final selected = await showDialog(
+                    context: context,
+                    builder: (_) => const CustomDialog(
+                      heading: "Delete",
+                      description: "Are you sure you want to delete?",
+                    ),
+                  );
+                  if (selected == true) {
+                    ref.read(videoProvider.notifier).remove(index);
+                  }
                 },
                 icon: const Icon(
                   Icons.delete,
@@ -67,8 +77,6 @@ class IndividualManageVideo extends ConsumerWidget {
                   )
                 : IconButton(
                     onPressed: () {
-                      print("Value is");
-                      print(index);
                       ref
                           .read(changeCurrentlyPlayingProvider.notifier)
                           .update((state) => index);
