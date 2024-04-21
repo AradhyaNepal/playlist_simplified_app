@@ -35,7 +35,7 @@ class _ManageVideosScreenState extends ConsumerState<ManageVideosScreen> {
     final videoList = ref.watch(videoProvider);
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-          brightness: Brightness.dark,
+          brightness: Brightness.light,
           previousPageTitle: "Manage",
           trailing: IconButton(
             style: iconStyleFrom,

@@ -56,8 +56,7 @@ class _AddEditVideoDialogState extends ConsumerState<AddEditVideoDialog> {
               ),
               TextFormField(
                 decoration: const InputDecoration(
-                  hintText: "Enter Youtube Url or Id..."
-                ),
+                    hintText: "Enter Youtube Url or Id..."),
                 controller: _videoController,
                 validator: (value) {
                   if (value?.isEmpty == true) {
@@ -91,7 +90,9 @@ class _AddEditVideoDialogState extends ConsumerState<AddEditVideoDialog> {
                   }
                   Navigator.pop(context);
                 },
-                child: const Text("Add"),
+                child: Text(
+                  widget.forEditIndex == null ? "Add" : "Edit",
+                ),
               ),
               SizedBox(
                 height: 20.h,
