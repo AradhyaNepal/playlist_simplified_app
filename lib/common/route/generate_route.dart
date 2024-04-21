@@ -1,0 +1,21 @@
+import 'package:flutter/material.dart';
+import 'package:playlist_simplified_app/features/splash/splash_screen.dart';
+
+class GenerateRoute {
+  static Route<dynamic>? onGenerateRoute(RouteSettings route) {
+    switch (route.name) {
+      case SplashScreen.route:
+        return MaterialPageRoute(
+          builder: (_) => const SplashScreen(),
+        );
+      default:
+        return MaterialPageRoute(
+          builder: (_)=>const Scaffold(
+            body: Center(
+              child: Text("Page Not Found"),
+            ),
+          ),
+        );
+    }
+  }
+}
