@@ -29,4 +29,15 @@ class VideoNotifier extends StateNotifier<List<String>> {
     VideoRepository().videoList=list;
   }
 
+  void moveToUp(int indexToUp){
+    if(indexToUp==0)return;
+    var indexToDown=indexToUp-1;
+    final list=[...state];
+    final upItemTemp=list[indexToUp];
+    list[indexToUp]=list[indexToDown];
+    list[indexToDown]=upItemTemp;
+    state=[...list];
+    VideoRepository().videoList=list;
+  }
+
 }

@@ -62,17 +62,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               return NotificationListener<YoutubeNextNotification>(
                 onNotification: (_) {
                   if (index < items.length - 1) {
-                    _controller.animateToPage(
-                      index + 1,
-                      duration: const Duration(milliseconds: 500),
-                      curve: Curves.easeInOut,
-                    );
+                    _moveTo(index+1);
                   } else {
-                    _controller.animateToPage(
-                      0,
-                      duration: const Duration(milliseconds: 500),
-                      curve: Curves.easeInOut,
-                    );
+                    _moveTo(0);
                   }
                   return true;
                 },
@@ -85,24 +77,54 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         Positioned(
           top: MediaQuery.of(context).viewPadding.top + 50.r,
           right: 50.r,
-          child: Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.white.withOpacity(0.5),
-            ),
-            child: IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, ManageVideosScreen.route);
-              },
-              icon: Icon(
-                Icons.settings,
-                color: ColorConstants.primaryColor,
-                size: 50.r,
+          child: Row(
+            children: [
+              const Spacer(),
+              Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white.withOpacity(0.5),
+                ),
+                child: IconButton(
+                  onPressed: () {
+                    _moveTo(1);
+                  },
+                  icon: Icon(
+                    Icons.repeat,
+                    color: Colors.green,
+                    size: 50.r,
+                  ),
+                ),
               ),
-            ),
+              SizedBox(width: 5.w,),
+              Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white.withOpacity(0.5),
+                ),
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, ManageVideosScreen.route);
+                  },
+                  icon: Icon(
+                    Icons.settings,
+                    color: ColorConstants.primaryColor,
+                    size: 50.r,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ],
+    );
+  }
+
+  void _moveTo(int page) {
+    _controller.animateToPage(
+      page,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
     );
   }
 }

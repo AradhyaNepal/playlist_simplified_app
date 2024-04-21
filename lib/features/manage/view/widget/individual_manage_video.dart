@@ -41,6 +41,16 @@ class IndividualManageVideo extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               const Spacer(),
+              if(index!=0)
+                IconButton(
+                  onPressed: () {
+                    ref.read(videoProvider.notifier).moveToUp(index);
+                  },
+                  icon: const Icon(
+                    Icons.arrow_upward_rounded,
+                    color: Colors.green,
+                  ),
+                ),
               IconButton(
                 onPressed: () {
                   showDialog(
