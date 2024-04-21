@@ -16,9 +16,9 @@ class VideoNotifier extends StateNotifier<List<String>> {
     VideoRepository().videoList=state;
   }
 
-  void remove(String youtubeId) {
+  void remove(int index) {
     final list=[...state];
-    list.removeWhere((element) => element==youtubeId);
+    list.removeAt(index);
     state=[...list];
     VideoRepository().videoList=list;
   }

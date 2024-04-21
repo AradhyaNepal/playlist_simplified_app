@@ -4,7 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:playlist_simplified_app/common/constants/color_constants.dart';
+import 'package:playlist_simplified_app/common/utils/custom_orientation.dart';
 import 'package:playlist_simplified_app/features/home/widget/youtube_screen.dart';
+import 'package:playlist_simplified_app/features/manage/controller/currently_playing_controller.dart';
 import 'package:playlist_simplified_app/features/manage/controller/video_controller.dart';
 import 'package:playlist_simplified_app/features/manage/view/manage_videos_screen.dart';
 
@@ -18,14 +20,13 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
+  final _controller = PageController();
+
   @override
   void initState() {
     super.initState();
-
+    CustomOrientation.fullScreen();
   }
-
-  final _controller = PageController();
-
   @override
   void dispose() {
     _controller.dispose();
@@ -34,6 +35,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(changeCurrentlyPlayingProvider, (_, next) {
+      if (next == null) return;
+      print("Index");
+      print(next);
+      _controller.animateToPage(
+        next,
+        duration: const Duration(milliseconds: 750),
+        curve: Curves.easeInOut,
+      );
+    });
     final items = ref
         .watch(videoProvider)
         .map(
@@ -44,6 +55,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       children: [
         Positioned.fill(
           child: PageView.builder(
+            onPageChanged: (value) {
+              ref
+                  .read(currentlyPlayingProvider.notifier)
+                  .update((state) => value);
+            },
             controller: _controller,
             itemBuilder: (context, index) {
               return NotificationListener<YoutubeNextNotification>(
@@ -70,15 +86,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           ),
         ),
         Positioned(
-          top: MediaQuery.of(context).viewPadding.top+50.r,
+          top: MediaQuery.of(context).viewPadding.top + 50.r,
           right: 50.r,
           child: Container(
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-            color: Colors.white.withOpacity(0.5),
+              color: Colors.white.withOpacity(0.5),
             ),
             child: IconButton(
-              onPressed: (){
+              onPressed: () {
                 Navigator.pushNamed(context, ManageVideosScreen.route);
               },
               icon: Icon(
