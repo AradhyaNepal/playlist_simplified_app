@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:playlist_simplified_app/features/home/home_screen.dart';
+import 'package:playlist_simplified_app/features/manage/view/manage_videos_screen.dart';
 import 'package:playlist_simplified_app/features/splash/splash_screen.dart';
 
 class GenerateRoute {
@@ -12,6 +13,10 @@ class GenerateRoute {
       case HomeScreen.route:
         return MaterialPageRoute(
           builder: (_) => const HomeScreen(),
+        );
+        case ManageVideosScreen.route:
+        return MaterialPageRoute(
+          builder: (_) => const ManageVideosScreen(),
         );
       default:
         return MaterialPageRoute(

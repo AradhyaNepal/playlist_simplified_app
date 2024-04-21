@@ -1,8 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:playlist_simplified_app/common/constants/color_constants.dart';
 import 'package:playlist_simplified_app/features/home/widget/youtube_screen.dart';
 import 'package:playlist_simplified_app/features/manage/controller/video_controller.dart';
+import 'package:playlist_simplified_app/features/manage/view/manage_videos_screen.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   static const String route = "/home-screen";
@@ -17,9 +21,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-    SystemChrome.setPreferredOrientations(
-        [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
+
   }
 
   final _controller = PageController();
@@ -32,33 +34,62 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final items = ref.watch(videoProvider).map(
+    final items = ref
+        .watch(videoProvider)
+        .map(
           (e) => YoutubeScreen(videoId: e),
-        ).toList();
-    return PageView.builder(
-      controller: _controller,
-      itemBuilder: (context, index) {
-        return NotificationListener<YoutubeNextNotification>(
-          onNotification: (_) {
-            if (index < items.length - 1) {
-              _controller.animateToPage(
-                index + 1,
-                duration: const Duration(milliseconds: 500),
-                curve: Curves.easeInOut,
+        )
+        .toList();
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: PageView.builder(
+            controller: _controller,
+            itemBuilder: (context, index) {
+              return NotificationListener<YoutubeNextNotification>(
+                onNotification: (_) {
+                  if (index < items.length - 1) {
+                    _controller.animateToPage(
+                      index + 1,
+                      duration: const Duration(milliseconds: 500),
+                      curve: Curves.easeInOut,
+                    );
+                  } else {
+                    _controller.animateToPage(
+                      0,
+                      duration: const Duration(milliseconds: 500),
+                      curve: Curves.easeInOut,
+                    );
+                  }
+                  return true;
+                },
+                child: items[index],
               );
-            } else {
-              _controller.animateToPage(
-                0,
-                duration: const Duration(milliseconds: 500),
-                curve: Curves.easeInOut,
-              );
-            }
-            return true;
-          },
-          child: items[index],
-        );
-      },
-      itemCount: items.length,
+            },
+            itemCount: items.length,
+          ),
+        ),
+        Positioned(
+          top: MediaQuery.of(context).viewPadding.top+50.r,
+          right: 50.r,
+          child: Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+            color: Colors.white.withOpacity(0.5),
+            ),
+            child: IconButton(
+              onPressed: (){
+                Navigator.pushNamed(context, ManageVideosScreen.route);
+              },
+              icon: Icon(
+                Icons.settings,
+                color: ColorConstants.primaryColor,
+                size: 50.r,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
