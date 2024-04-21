@@ -15,7 +15,7 @@ class VideoRepository {
 
   Box get hiveBox=>_hiveBox;
 
-  void init()async{
+  Future<void> init()async{
     await Hive.initFlutter();
     try {
       _hiveBox = await Hive.openBox(_boxName);
@@ -27,7 +27,7 @@ class VideoRepository {
 
   List<String> get videoList{
     final item=_hiveBox.get(videosKey);
-    if(item is List<String>){
+    if(item is! List<String>){
       final items=[
         "CUT_hdgbV1I",
         "DLqzbColpcE",

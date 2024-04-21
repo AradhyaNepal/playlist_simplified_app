@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:playlist_simplified_app/common/constants/size_constants.dart';
 import 'package:playlist_simplified_app/common/route/generate_route.dart';
+import 'package:playlist_simplified_app/features/manage/repository/video_repository.dart';
 import 'package:playlist_simplified_app/features/splash/splash_screen.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
-  runApp(const MyApp());
+
+  runApp(
+    const ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -37,4 +44,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
