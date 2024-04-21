@@ -7,6 +7,7 @@ import 'package:playlist_simplified_app/common/widget/custom_dialog.dart';
 import 'package:playlist_simplified_app/common/widget/custom_network_image.dart';
 import 'package:playlist_simplified_app/features/manage/controller/currently_playing_controller.dart';
 import 'package:playlist_simplified_app/features/manage/controller/video_controller.dart';
+import 'package:playlist_simplified_app/features/manage/view/widget/add_edit_video_dialog.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class IndividualManageVideo extends ConsumerWidget {
@@ -41,7 +42,14 @@ class IndividualManageVideo extends ConsumerWidget {
             children: [
               const Spacer(),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context){
+                      return AddEditVideoDialog(forEditIndex: index);
+                    },
+                  );
+                },
                 icon: const Icon(
                   Icons.edit,
                   color: Colors.blue,

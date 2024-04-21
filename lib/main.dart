@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:playlist_simplified_app/common/constants/size_constants.dart';
 import 'package:playlist_simplified_app/common/route/generate_route.dart';
-import 'package:playlist_simplified_app/features/manage/repository/video_repository.dart';
 import 'package:playlist_simplified_app/features/splash/splash_screen.dart';
 
 void main() async {

@@ -17,11 +17,14 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 3),()async{
+    Future.delayed(const Duration(seconds: 3), () async {
+      final navigator = Navigator.of(context);
       await VideoRepository().init();
-      Navigator.pushReplacementNamed(context, HomeScreen.route);
+
+      navigator.pushReplacementNamed(HomeScreen.route);
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,5 +50,3 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 }
-
-

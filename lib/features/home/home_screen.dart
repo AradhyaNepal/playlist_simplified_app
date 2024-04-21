@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:playlist_simplified_app/common/constants/color_constants.dart';
@@ -37,8 +35,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Widget build(BuildContext context) {
     ref.listen(changeCurrentlyPlayingProvider, (_, next) {
       if (next == null) return;
-      print("Index");
-      print(next);
       _controller.animateToPage(
         next,
         duration: const Duration(milliseconds: 750),
@@ -55,6 +51,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       children: [
         Positioned.fill(
           child: PageView.builder(
+            key: ValueKey(items.length),
             onPageChanged: (value) {
               ref
                   .read(currentlyPlayingProvider.notifier)

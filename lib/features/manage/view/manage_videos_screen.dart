@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:playlist_simplified_app/common/utils/custom_orientation.dart';
-import 'package:playlist_simplified_app/common/widget/custom_network_image.dart';
+import 'package:playlist_simplified_app/common/utils/icon_style_from.dart';
 import 'package:playlist_simplified_app/features/manage/controller/video_controller.dart';
+import 'package:playlist_simplified_app/features/manage/view/widget/add_edit_video_dialog.dart';
 import 'package:playlist_simplified_app/features/manage/view/widget/individual_manage_video.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class ManageVideosScreen extends ConsumerStatefulWidget {
   static const String route = "/manage-videos";
@@ -34,10 +34,23 @@ class _ManageVideosScreenState extends ConsumerState<ManageVideosScreen> {
   Widget build(BuildContext context) {
     final videoList = ref.watch(videoProvider);
     return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(
-        brightness: Brightness.dark,
-        previousPageTitle: "Manage",
-      ),
+      navigationBar: CupertinoNavigationBar(
+          brightness: Brightness.dark,
+          previousPageTitle: "Manage",
+          trailing: IconButton(
+            style: iconStyleFrom,
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context){
+                  return const AddEditVideoDialog(forEditIndex: null);
+                },
+              );
+            },
+            icon: const Icon(
+              Icons.add,
+            ),
+          )),
       child: SafeArea(
         child: ListView.separated(
           separatorBuilder: (_, __) => SizedBox(
