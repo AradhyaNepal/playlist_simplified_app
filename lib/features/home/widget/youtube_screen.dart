@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:playlist_simplified_app/common/constants/color_constants.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class YoutubeScreen extends StatefulWidget {
+class YoutubeScreen extends StatelessWidget {
   static const String route = "youtube";
   final String videoId;
 
@@ -12,26 +13,36 @@ class YoutubeScreen extends StatefulWidget {
   });
 
   @override
-  State<YoutubeScreen> createState() => _YoutubeScreenState();
+  Widget build(BuildContext context) {
+    return _YoutubeContent(
+      key: ValueKey(videoId),
+      videoId: videoId,
+    );
+  }
 }
 
-class _YoutubeScreenState extends State<YoutubeScreen> {
+class _YoutubeContent extends StatefulWidget {
+  final String videoId;
+
+  const _YoutubeContent({
+    super.key,
+    required this.videoId,
+  });
+
+  @override
+  State<_YoutubeContent> createState() => _YoutubeContentState();
+}
+
+class _YoutubeContentState extends State<_YoutubeContent> {
   late final YoutubePlayerController _controller = YoutubePlayerController(
     initialVideoId: widget.videoId,
     flags: const YoutubePlayerFlags(
       mute: false,
-      loop: true,
-      autoPlay: false,
+      loop: false,
+      autoPlay: true,
     ),
   );
 
-  @override
-  void initState() {
-    super.initState();
-    _controller.addListener(() {
-
-    });
-  }
 
   @override
   void dispose() {
@@ -41,27 +52,44 @@ class _YoutubeScreenState extends State<YoutubeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return YoutubePlayer(
-      onEnded: (_){
-        Navigator.pop(context);
-      },
-      controller: _controller,
-      bottomActions:[
-        const SizedBox(width: 14.0),
-        CurrentPosition(),
-        const SizedBox(width: 8.0),
-        ProgressBar(
-          isExpanded: true,
-          colors: ProgressBarColors(
-            playedColor: ColorConstants.primaryColor,
-            bufferedColor: Colors.white,
-            backgroundColor: ColorConstants.primaryColor.withOpacity(0.5),
-            handleColor: ColorConstants.primaryColor,
+    return Stack(
+      children: [
+        YoutubePlayer(
+          onEnded: (_) {
+            YoutubeNextNotification().dispatch(context);
+          },
+          controller: _controller,
+          bottomActions: [
+            const SizedBox(width: 14.0),
+            CurrentPosition(),
+            const SizedBox(width: 8.0),
+            ProgressBar(
+              isExpanded: true,
+              colors: ProgressBarColors(
+                playedColor: ColorConstants.primaryColor,
+                bufferedColor: Colors.white,
+                backgroundColor: ColorConstants.primaryColor.withOpacity(0.5),
+                handleColor: ColorConstants.primaryColor,
+              ),
+            ),
+            RemainingDuration(),
+            const PlaybackSpeedButton(),
+          ],
+        ),
+        Positioned.fill(
+          bottom: 250.h,
+          child: Container(
+            color: Colors.black.withOpacity(0.2),
+            height: double.infinity,
+            width: double.infinity,
           ),
         ),
-        RemainingDuration(),
-        const PlaybackSpeedButton(),
       ],
     );
   }
+}
+
+
+class YoutubeNextNotification extends Notification{
+
 }

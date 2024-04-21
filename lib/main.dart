@@ -6,8 +6,9 @@ import 'package:playlist_simplified_app/common/route/generate_route.dart';
 import 'package:playlist_simplified_app/features/splash/splash_screen.dart';
 
 void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+      [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
   runApp(const MyApp());
 }
 

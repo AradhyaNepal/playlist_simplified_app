@@ -15,11 +15,7 @@ class GenerateRoute {
         );
       default:
         return MaterialPageRoute(
-          builder: (_)=>const Scaffold(
-            body: Center(
-              child: Text("Page Not Found"),
-            ),
-          ),
+          builder: (_)=>const SplashScreen(),
         );
     }
   }
